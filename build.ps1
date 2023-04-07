@@ -1,1 +1,1 @@
-pyinstaller --onefile --noconsole moon_position.py
+pyinstaller --onefile --noconsole --add-data "style.css;." moon_position.py

@@ -5,6 +5,14 @@ import datetime
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QTableWidget, QTableView, QTableWidgetItem, QVBoxLayout, QPushButton, QLineEdit, QLabel, QWidget, QHeaderView, QTextEdit
 from PyQt5.QtCore import QFileSystemWatcher, Qt
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def split_and_join_with_newlines(text, block_length):
     words = text.split()
@@ -27,7 +35,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # Load stylesheet from external file
-        with open("style.css", "r") as file:
+        with open(resource_path("style.css"), "r") as file:
             self.setStyleSheet(file.read())
 
         self.setWindowTitle("Moon+ Reader Page Position Viewer")

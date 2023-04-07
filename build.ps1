@@ -1,1 +1,1 @@
-pyinstaller --onefile --noconsole your_script_name.py
+pyinstaller --onefile --noconsole moon_position.py

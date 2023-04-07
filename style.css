@@ -1,0 +1,75 @@
+/* style.css */
+
+* {
+    background-color: #222222;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+QLineEdit, QTableView {
+    border: 1px solid #333333;
+}
+
+QHeaderView::section {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+}
+
+QTableView {
+    gridline-color: #333333;
+}
+
+QTableView::item {
+    padding: 5px;
+}
+
+QTableView::corner {
+    background-color: #333333;
+}
+
+QPushButton {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #444444;
+}
+
+
+/* * {
+    background-color: #222222;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+QLineEdit, QTableView {
+    border: 1px solid #333333;
+}
+
+QHeaderView::section {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+}
+
+QTableView {
+    gridline-color: #333333;
+}
+
+QTableView::item {
+    padding: 5px;
+}
+
+QPushButton {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #444444;
+}
+ */

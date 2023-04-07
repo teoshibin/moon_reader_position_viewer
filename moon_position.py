@@ -44,7 +44,7 @@ class MainWindow(QMainWindow):
             self.setStyleSheet(file.read())
 
         self.setWindowTitle("Moon+ Reader Page Position Viewer")
-        self.resize(1100, 600)  # Set the default size of the app
+        self.resize(820, 600)  # Set the default size of the app
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -59,8 +59,9 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.search_input)
 
         self.table_widget = QTableWidget()
-        self.table_widget.setColumnCount(5)
-        self.table_widget.setHorizontalHeaderLabels(["Filename", "Extension", "Page", "Progress", "Created Date"])
+        self.table_widget.setColumnCount(4)
+        self.table_widget.setHorizontalHeaderLabels(["Filename", "Extension", "Page", "Progress"])
+        # self.table_widget.setHorizontalHeaderLabels(["Filename", "Extension", "Page", "Progress", "Created Date"])
         self.table_widget.setSortingEnabled(True)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         self.table_widget.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -133,7 +134,7 @@ class MainWindow(QMainWindow):
 
                 self.table_widget.setItem(row, 2, QTableWidgetItem(page))
                 self.table_widget.setItem(row, 3, QTableWidgetItem(progress))
-                self.table_widget.setItem(row, 4, QTableWidgetItem(timestamp))
+                # self.table_widget.setItem(row, 4, QTableWidgetItem(timestamp))
 
 
     def search_files(self, text):

@@ -4,6 +4,11 @@ import json
 import datetime
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMainWindow, QTableWidget, QTableView, QTableWidgetItem, QVBoxLayout, QPushButton, QLineEdit, QLabel, QWidget, QHeaderView, QTextEdit
 from PyQt5.QtCore import QFileSystemWatcher, Qt
+import logging
+from PyQt5.QtCore import QTimer
+
+
+logging.basicConfig(filename='debug.log', level=logging.ERROR, format='%(asctime)s %(levelname)s %(message)s')
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -39,7 +44,7 @@ class MainWindow(QMainWindow):
             self.setStyleSheet(file.read())
 
         self.setWindowTitle("Moon+ Reader Page Position Viewer")
-        self.resize(996, 600)  # Set the default size of the app
+        self.resize(1100, 600)  # Set the default size of the app
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -77,9 +82,17 @@ class MainWindow(QMainWindow):
 
         # File system watcher to monitor file changes
         self.file_system_watcher = QFileSystemWatcher()
-        self.file_system_watcher.directoryChanged.connect(self.load_files)
+        # self.file_system_watcher.directoryChanged.connect(self.load_files)
+        self.timer = QTimer()
+        self.timer.setSingleShot(True)
+        self.timer.setInterval(2000)  # delay of 1 second
+        self.file_system_watcher.directoryChanged.connect(self.on_directory_changed)
 
         self.load_config()
+
+    def on_directory_changed(self, directory):
+        self.timer.start()
+        self.timer.timeout.connect(lambda: self.load_files(directory))
 
     def browse_folder(self):
         folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
@@ -96,7 +109,6 @@ class MainWindow(QMainWindow):
         for root, _, files in os.walk(folder_path):
             for file in files:
                 file_path = os.path.join(root, file)
-                # file_extension = os.path.splitext(file)[1]
                 with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                     first_line = f.readline().strip()
 
@@ -150,11 +162,13 @@ class MainWindow(QMainWindow):
         with open("moon_position.json", "w") as file:
             json.dump(config, file)
 
-app = QApplication(sys.argv)
-app.setApplicationName("Moon+ Reader Page Position Viewer")
+try:
+    app = QApplication(sys.argv)
+    app.setApplicationName("Moon+ Reader Page Position Viewer")
 
-window = MainWindow()
-window.show()
-sys.exit(app.exec_())
-
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
+except Exception as e:
+    logging.exception(e)
 
